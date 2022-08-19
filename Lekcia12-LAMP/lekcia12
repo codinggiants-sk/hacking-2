@@ -1,0 +1,71 @@
+# Instalacia potrebnych programov
+### Mysql instalacia
+sudo apt-get install mysql-server mysql-client
+
+### PHP instalacia
+sudo apt-get install php
+
+# Mysql
+## Vytvorenie DB a pridanie uzivatela
+sudo mysqladmin create web
+sudo mysql 
+create user 'web'@'localhost' identified by 'weriucb23489b';
+grant insert,select on web.* to 'web'@'localhost';
+flush privileges;
+
+## Vytvorenie tabulky
+sudo mysql
+CREATE TABLE Posts (
+    Id int NOT NULL AUTO_INCREMENT,
+    Name varchar(255) NOT NULL,
+    Msg varchar(255),
+    PRIMARY KEY (Id)
+);
+show tables;
+describe Posts;
+
+## Naplnime data
+mysql -u web -p web # heslo zadame: weriucb23489b
+select * from Posts;
+
+mysql> insert into Posts (Name,Msg) VALUES ( 'Andrej', 'Ahoj');
+mysql> insert into Posts (Name,Msg) VALUES ( 'Johnny', 'Ahoy');
+mysql> insert into Posts (Name,Msg) VALUES ( 'Asmongus', 'Hello');
+
+mysql> select * from Posts;
++----+----------+-------+
+| Id | Name     | Msg   |
++----+----------+-------+
+|  1 | Andrej   | Ahoj  |
+|  2 | Johnny   | Ahoy  |
+|  3 | Asmongus | Hello |
++----+----------+-------+
+
+# PHP
+## skontrolovanie prav na www
+ls -la /var/www/html
+sudo chown cgstudent /var/www/html
+
+## Pridanie info.php suboru
+<?php
+    phpinfo();
+?>
+
+Nasledne kontola cez web http://IP/info.php
+
+## adresar na credentials
+mkdir /var/www/html/etc
+## subor .htaccess
+options -indexes
+<Files "*">
+  Require all denied
+</Files>
+## AllowOverride All v apache.conf 
+V /etc/apache2/apache.conf najst Directory /var/www
+A zmenit AllowOverride None na AllowOverride All
+
+
+
+
+
+
